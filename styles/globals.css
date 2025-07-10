@@ -40,3 +40,44 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Estilos personalizados para PunchCard */
+.punch-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.punch-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.punch-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.punch-slot {
+  width: 50px;
+  height: 50px;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.punch-slot.filled {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.qr-code {
+  max-width: 200px;
+  margin: 0 auto;
+}
