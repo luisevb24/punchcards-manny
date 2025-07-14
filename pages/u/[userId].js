@@ -8,7 +8,7 @@ import { formatDate } from '@/lib/utils';
 export default function UserPunchCard() {
   const router = useRouter();
   const { userId } = router.query;
-  
+
   const [user, setUser] = useState(null);
   const [punches, setPunches] = useState([]);
   const [rewards, setRewards] = useState([]);
@@ -32,7 +32,7 @@ export default function UserPunchCard() {
         .single();
 
       if (userError) throw userError;
-      
+
       if (!userData) {
         router.push('/404');
         return;
@@ -76,7 +76,7 @@ export default function UserPunchCard() {
 
   const addPunch = async () => {
     if (!user || addingPunch) return;
-    
+
     setAddingPunch(true);
     try {
       const { data, error } = await supabase
@@ -92,10 +92,10 @@ export default function UserPunchCard() {
 
       // Recargar datos
       await fetchUserData();
-      
+
       // Mostrar mensaje de éxito
       alert('¡Punch agregado exitosamente!');
-      
+
     } catch (error) {
       console.error('Error:', error);
       alert('Error al agregar punch. Intenta de nuevo.');
@@ -122,7 +122,7 @@ export default function UserPunchCard() {
 
       alert('¡Recompensa solicitada! Te contactaremos pronto.');
       await fetchUserData();
-      
+
     } catch (error) {
       console.error('Error:', error);
       alert('Error al solicitar recompensa. Intenta de nuevo.');
@@ -159,18 +159,18 @@ export default function UserPunchCard() {
       <div className="container py-4">
         {/* Encabezado del usuario */}
         <div className="card punch-card mb-4">
-          <div className="card-body text-center">
-            <h1 className="h3 mb-3">¡Hola, {user.nombre}!</h1>
+          <div className="card-body text-center p-4">
+            <h1 className="h2 mb-4 text-manny-orange">¡Hola, {user.nombre}!</h1>
             <div className="row g-3">
               <div className="col-6">
-                <div className="bg-primary text-white rounded p-3">
-                  <h2 className="h1 mb-0">{totalPunches}</h2>
+                <div className="stat-card">
+                  <h2>{totalPunches}</h2>
                   <p className="mb-0">Punches totales</p>
                 </div>
               </div>
               <div className="col-6">
-                <div className="bg-success text-white rounded p-3">
-                  <h2 className="h1 mb-0">{redeemedRewards.length}</h2>
+                <div className="stat-card">
+                  <h2>{redeemedRewards.length}</h2>
                   <p className="mb-0">Recompensas canjeadas</p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default function UserPunchCard() {
 
         {/* Botón para agregar punch */}
         <div className="text-center mb-4">
-          <button 
+          <button
             className="btn btn-primary btn-lg"
             onClick={addPunch}
             disabled={addingPunch}
@@ -200,7 +200,7 @@ export default function UserPunchCard() {
           <div className="card-body">
             <div className="punch-grid">
               {[...Array(20)].map((_, index) => (
-                <div 
+                <div
                   key={index}
                   className={`punch-slot ${index < totalPunches ? 'filled' : ''}`}
                 >
@@ -220,7 +220,7 @@ export default function UserPunchCard() {
             {rewards.map((reward) => {
               const canRedeem = totalPunches >= reward.punches_requeridos;
               const alreadyRedeemed = redeemedRewards.some(r => r.reward_id === reward.id);
-              
+
               return (
                 <div key={reward.id} className="border rounded p-3 mb-3">
                   <div className="row align-items-center">
@@ -235,7 +235,7 @@ export default function UserPunchCard() {
                       {alreadyRedeemed ? (
                         <span className="badge bg-secondary">Ya canjeada</span>
                       ) : canRedeem ? (
-                        <button 
+                        <button
                           className="btn btn-success btn-sm"
                           onClick={() => requestReward(reward.id)}
                         >

@@ -1,13 +1,44 @@
+/* Variables de marca según manual de identidad Manny */
 :root {
+  /* Colores principales de la marca */
+  --manny-orange: #E04E39;
+  --manny-orange-rgb: 224, 78, 57;
+  --manny-pink: #CE0058;
+  --manny-pink-rgb: 206, 0, 88;
+  
+  /* Colores de fondo y texto */
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Gradiente de marca */
+  --manny-gradient: linear-gradient(135deg, var(--manny-orange) 0%, var(--manny-pink) 100%);
+  
+  /* Colores de estado */
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --info: #17a2b8;
+  
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-colored: 0 8px 24px rgba(var(--manny-orange-rgb), 0.25);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;  
+    --background: #0a0a0a;
     --foreground: #ededed;
+    --shadow-colored: 0 8px 24px rgba(var(--manny-pink-rgb), 0.3);
   }
+}
+
+/* Reset y estilos base */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html,
@@ -19,15 +50,9 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -41,43 +66,304 @@ a {
   }
 }
 
-/* Estilos personalizados para PunchCard */
+/* Estilos personalizados de marca Manny */
+
+/* Navbar personalizado */
+.navbar {
+  background: var(--manny-gradient) !important;
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+}
+
+/* Botones de marca */
+.btn-primary {
+  background: var(--manny-orange);
+  border-color: var(--manny-orange);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #d63e2d;
+  border-color: #d63e2d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-colored);
+}
+
+.btn-outline-primary {
+  color: var(--manny-orange);
+  border-color: var(--manny-orange);
+}
+
+.btn-outline-primary:hover {
+  background: var(--manny-orange);
+  border-color: var(--manny-orange);
+}
+
+/* Cards de punches estilo marca */
 .punch-card {
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  border: none;
+  border-radius: 20px;
+  background: white;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .punch-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-colored);
 }
 
+.punch-card .card-header {
+  background: var(--manny-gradient);
+  color: white;
+  border: none;
+  padding: 1.25rem;
+}
+
+.punch-card .card-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Grid de punches visual */
 .punch-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  padding: 20px;
+  gap: 15px;
+  padding: 30px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .punch-slot {
-  width: 50px;
-  height: 50px;
-  border: 2px dashed #ccc;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #f0f0f0;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: #fafafa;
+  position: relative;
+  overflow: hidden;
+}
+
+.punch-slot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--manny-gradient);
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
 }
 
 .punch-slot.filled {
-  background-color: #28a745;
-  border-color: #28a745;
+  background: var(--manny-gradient);
+  border-color: transparent;
   color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(var(--manny-orange-rgb), 0.4);
 }
 
+.punch-slot.filled::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Animación de punch */
+@keyframes punchAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1.05) rotate(0deg);
+  }
+}
+
+.punch-slot.filled {
+  animation: punchAnimation 0.4s ease-out;
+}
+
+/* Badges personalizados */
+.badge {
+  font-weight: 600;
+  padding: 0.5em 1em;
+  border-radius: 50px;
+}
+
+.bg-primary {
+  background: var(--manny-gradient) !important;
+}
+
+/* Estadísticas con gradiente */
+.stat-card {
+  background: var(--manny-gradient);
+  border-radius: 15px;
+  padding: 2rem;
+  color: white;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-card h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* QR Code styling */
 .qr-code {
-  max-width: 200px;
+  max-width: 250px;
   margin: 0 auto;
+  padding: 15px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+}
+
+/* Formularios estilo marca */
+.form-control {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--manny-orange);
+  box-shadow: 0 0 0 0.2rem rgba(var(--manny-orange-rgb), 0.25);
+}
+
+/* Tablas estilizadas */
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background: #f8f9fa;
+  border: none;
+  font-weight: 600;
+  color: var(--manny-orange);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Modal personalizado */
+.modal-content {
+  border-radius: 20px;
+  border: none;
+  overflow: hidden;
+}
+
+.modal-header {
+  background: var(--manny-gradient);
+  color: white;
+  border: none;
+}
+
+/* Footer */
+footer {
+  background: var(--manny-gradient) !important;
+  margin-top: auto;
+}
+
+/* Animaciones de carga */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+.spinner-border.text-primary {
+  color: var(--manny-orange) !important;
+}
+
+/* Efectos hover para enlaces */
+a:hover {
+  color: var(--manny-orange);
+  transition: color 0.3s ease;
+}
+
+/* Hero section */
+.hero-gradient {
+  background: var(--manny-gradient);
+  color: white;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-gradient::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: float 20s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .punch-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .punch-slot {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .stat-card h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Utilidades de marca */
+.text-manny-orange {
+  color: var(--manny-orange) !important;
+}
+
+.text-manny-pink {
+  color: var(--manny-pink) !important;
+}
+
+.bg-manny-gradient {
+  background: var(--manny-gradient) !important;
 }

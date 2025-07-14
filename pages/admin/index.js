@@ -138,7 +138,7 @@ export default function AdminDashboard() {
         {/* Estadísticas */}
         <div className="row g-3 mb-4">
           <div className="col-md-3">
-            <div className="card text-white bg-primary">
+            <div className="card text-white" style={{ background: 'var(--manny-gradient)' }}>
               <div className="card-body">
                 <h5 className="card-title">Usuarios Totales</h5>
                 <p className="card-text display-6">{stats.totalUsers}</p>
